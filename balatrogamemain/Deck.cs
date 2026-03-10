@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace balatrogame
+namespace balatrogamemain
 {
     class Deck // Beheert alle speelkaarten
     {
@@ -33,26 +33,19 @@ namespace balatrogame
         // Mengt kaarten door elkaar
         public void Shuffle()
         {
-            this.cards = this.cards.Shuffle()
+            this.cards = this.cards.Shuffle().ToList();
         }
 
         // Trek 1 kaart en verwijder uit deck
         public Card TakeCard()
         {
+            if (cards.Count == 0)
+                return null;
+            
             Card card = cards[0];
-            this.cards.RemoveAt(0);
+            cards.RemoveAt(0);
             return card;
         }
-
-        // Trek meerdere kaarten en verwijder uit deck
-        public List<Card> TakeCards(int count)
-        {
-            List<Card> hand = cards.Take(count).ToList();
-            this.cards.RemoveRange(0, count);
-            return hand;
-        }
-
-        // Geef alle kaarten in het deck
         public List<Card> GetCards() => cards;
     }
 }
