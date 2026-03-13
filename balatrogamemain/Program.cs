@@ -14,27 +14,36 @@ namespace balatrogamemain
             // Maak nieuw deck met 52 kaarten
             Deck deck = new Deck();
 
-            // Trek 5 kaarten uit het deck
-            List<Card> myHand = deck.TakeCards(5);
+            // Maak een speler
+            Player player = new Player();
 
-            // Toon de getrokken kaarten
-            Console.WriteLine("Je hebt deze 5 kaarten gekregen:");
-            foreach (Card card in myHand)
+            // Trek 5 kaarten uit het deck en geef aan speler
+            for (int i = 0; i < 5; i++)
             {
-                Console.WriteLine($"{card.Value} van {card.Suit}");
+                Card card = deck.TakeCard();
+                if (card != null)
+                {
+                    player.AddCard(card);
+                }
             }
 
-            Console.WriteLine($"\nEr zitten nog {deck.GetCards().Count} kaarten in het deck");
+            // Toon de hand van de speler
+            player.ShowHand();
+
+            Console.WriteLine("\nEr zitten nog " + deck.GetCards().Count + " kaarten in het deck");
 
             // Trek nog 3 kaarten
             Console.WriteLine("\nJe trekt nog 3 extra kaarten:");
-            List<Card> moreCards = deck.TakeCards(3);
-            foreach (Card card in moreCards)
+            for (int i = 0; i < 3; i++)
             {
-                Console.WriteLine($"{card.Value} van {card.Suit}");
+                Card card = deck.TakeCard();
+                if (card != null)
+                {
+                    Console.WriteLine(card.Value + " van " + card.Suit);
+                }
             }
 
-            Console.WriteLine($"\nEr zitten nog {deck.GetCards().Count} kaarten in het deck");
+            Console.WriteLine("\nEr zitten nog " + deck.GetCards().Count + " kaarten in het deck");
 
             Console.ReadLine();
         }

@@ -40,7 +40,7 @@ namespace balatrogamemain
         public Card TakeCard()
         {
             if (cards.Count == 0)
-                return null;
+                return null!;
             
             Card card = cards[0];
             cards.RemoveAt(0);
