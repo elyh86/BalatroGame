@@ -29,5 +29,11 @@ namespace balatrogamemain
         {
             return Value.ToString();
         }
+
+        // Geeft numerieke waarde van kaart
+        public int GetValue()
+        {
+            return (int)Value;
+        }
     }
 }
