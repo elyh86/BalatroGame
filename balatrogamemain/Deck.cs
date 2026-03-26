@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace balatrogamemain
 {
-    class Deck // Beheert alle speelkaarten
+    class Deck // beheert alle kaarten in het spel
     {
-        private List<Card> cards; // Alle kaarten in het deck
+        private List<Card> cards; // lijst met alle 52 kaarten
 
-        // Constructor - maakt deck met 52 kaarten
+        // constructor maakt deck en shuffelt
         public Deck()
         {
             cards = new List<Card>();
-            InitializeDeck();
-            Shuffle();
+            InitializeDeck(); // maak alle kaarten
+            Shuffle(); // schud ze door elkaar
         }
 
-        // Maakt alle 52 kaarten
+        // maak alle 52 kaarten (4 soorten x 13 waardes)
         private void InitializeDeck()
         {
             foreach (Suit suit in Enum.GetValues(typeof(Suit)))
@@ -30,22 +30,31 @@ namespace balatrogamemain
             }
         }
 
-        // Mengt kaarten door elkaar
+        // schud kaarten random door elkaar
         public void Shuffle()
         {
-            this.cards = this.cards.Shuffle().ToList();
+            Random random = new Random();
+            for (int i = 0; i < cards.Count; i++)
+            {
+                int j = random.Next(cards.Count); // kies random plek
+                Card temp = cards[i]; // wissel kaarten
+                cards[i] = cards[j];
+                cards[j] = temp;
+            }
         }
 
-        // Trek 1 kaart en verwijder uit deck
+        // trek 1 kaart van boven en verwijder
         public Card TakeCard()
         {
-            if (cards.Count == 0)
-                return null!;
+            if (cards.Count == 0) // check of deck niet leeg is
+                return null;
             
-            Card card = cards[0];
-            cards.RemoveAt(0);
+            Card card = cards[0]; // pak eerste kaart
+            cards.RemoveAt(0); // verwijder uit deck
             return card;
         }
+
+        // geef lijst terug van alle kaarten in deck
         public List<Card> GetCards() => cards;
     }
 }

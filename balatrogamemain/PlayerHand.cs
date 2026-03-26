@@ -6,43 +6,76 @@ using System.Threading.Tasks;
 
 namespace balatrogamemain
 {
-    class PlayerHand // Beheert de kaarten en score van een spelerhand
+    class PlayerHand // beheert kaarten van speler
     {
-        private List<Card> cards; // Kaarten in de hand
+        private List<Card> cards; // kaarten in hand van speler
 
+        // constructor maakt lege hand
         public PlayerHand()
         {
             this.cards = new List<Card>();
         }
 
-        // Voegt kaart toe aan hand
+        // voeg kaart toe aan hand
         public void AddCard(Card card)
         {
             this.cards.Add(card);
         }
 
-        // Bereken totale score van hand
+        // bereken totale score van alle kaarten
         public int GetScore()
         {
             int score = 0;
-            foreach (Card card in this.cards)
+            for (int i = 0; i < this.cards.Count; i++)
             {
-                score += card.GetValue();
+                score += this.cards[i].GetValue(); // tel waarde op
             }
             return score;
         }
 
-        // Toon kaarten in hand
+        // toon alle kaarten in hand met nummers
         public void ShowHand()
         {
             Console.WriteLine("Jouw hand:");
-            foreach (Card card in this.cards)
+            for (int i = 0; i < this.cards.Count; i++)
             {
-                Console.WriteLine(card.MakeAsString() + " " + card.Suit);
+                Console.WriteLine((i + 1) + ". " + this.cards[i].MakeAsString() + " " + this.cards[i].Suit);
             }
-            Console.WriteLine("Score: " + GetScore());
+            Console.WriteLine("Score: " + GetScore()); // toon totale score
         }
 
+        // geef lijst terug van kaarten
         public List<Card> GetCards() => cards;
+
+        // laat speler kaarten selecteren voor pokerhand
+        public List<Card> SelectCards()
+        {
+            Console.WriteLine("Welke kaarten wil je selecteren? (bijv: 1,3,5)");
+            string input = Console.ReadLine();
+            
+            List<Card> selected = new List<Card>();
+            string[] numbers = input.Split(','); // splits input
+            
+            foreach (string num in numbers)
+            {
+                int index;
+                // check of input geldig is
+                if (int.TryParse(num.Trim(), out index) && index > 0 && index <= this.cards.Count)
+                {
+                    selected.Add(this.cards[index - 1]); // voeg kaart toe
+                }
+            }
+            
+            return selected;
+        }
+
+        // analyseer geselecteerde kaarten voor pokerhand
+        public void AnalyzeHand(List<Card> selectedCards)
+        {
+            HandType handType = PokerHand.GetHandType(selectedCards);
+            int points = PokerHand.GetPoints(handType);
+            Console.WriteLine("Hand type: " + handType);
+            Console.WriteLine("Punten: " + points);
+        }
     }
 }
