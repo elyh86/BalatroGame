@@ -14,8 +14,8 @@ namespace balatrogamemain
             // Maak nieuw deck met 52 kaarten
             Deck deck = new Deck();
 
-            // Maak een speler
-            Player player = new Player();
+            // Maak een spelerhand
+            PlayerHand hand = new PlayerHand();
 
             // Trek 5 kaarten uit het deck en geef aan speler
             for (int i = 0; i < 5; i++)
@@ -23,12 +23,12 @@ namespace balatrogamemain
                 Card card = deck.TakeCard();
                 if (card != null)
                 {
-                    player.AddCard(card);
+                    hand.AddCard(card);
                 }
             }
 
-            // Toon de hand van de speler
-            player.ShowHand();
+            // Toon de hand van de speler met score
+            hand.ShowHand();
 
             Console.WriteLine("\nEr zitten nog " + deck.GetCards().Count + " kaarten in het deck");
 
