@@ -8,29 +8,29 @@ namespace balatrogamemain
 {
     class Card
     {
-        public CardValue Value; // Waarde van de kaart
-        public Suit Suit; // Type kaart
+        public CardValue Value; // waarde van kaart (2,3,4...K,Q,J,A)
+        public Suit Suit; // soort kaart (hearts, diamonds, spades, clovers)
 
-        // Constructor - maakt een kaart
+        // constructor om kaart te maken
         public Card(CardValue value, Suit suit)
         {
             this.Value = value;
             this.Suit = suit;
         }
 
-        // Print de kaartwaarde
+        // print alleen de waarde van kaart
         public void PrintMe()
         {
             Console.WriteLine(this.Value);
         }
 
-        // Zet kaart om naar tekst
+        // zet kaart om naar tekst
         public string MakeAsString()
         {
             return Value.ToString();
         }
 
-        // Geeft numerieke waarde van kaart
+        // geef numerieke waarde terug voor score
         public int GetValue()
         {
             return (int)Value;
