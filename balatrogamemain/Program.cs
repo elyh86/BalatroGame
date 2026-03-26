@@ -30,6 +30,17 @@ namespace balatrogamemain
             // Toon de hand van de speler met score
             hand.ShowHand();
 
+            // Laat speler kaarten selecteren
+            List<Card> selectedCards = hand.SelectCards();
+            Console.WriteLine("\nGeselecteerde kaarten:");
+            foreach (Card card in selectedCards)
+            {
+                Console.WriteLine(card.MakeAsString() + " " + card.Suit);
+            }
+
+            // Analyseer de pokerhand
+            hand.AnalyzeHand(selectedCards);
+
             Console.WriteLine("\nEr zitten nog " + deck.GetCards().Count + " kaarten in het deck");
 
             // Trek nog 3 kaarten
