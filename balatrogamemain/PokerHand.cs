@@ -24,8 +24,6 @@ namespace balatrogamemain
     {
         public static HandType GetHandType(List<Card> cards)
         {
-            if (cards.Count < 5) return HandType.HighCard;
-
             // Check voor Royal Flush
             if (IsRoyalFlush(cards)) return HandType.RoyalFlush;
             
@@ -52,7 +50,8 @@ namespace balatrogamemain
             
             // Check voor Pair
             if (IsPair(cards)) return HandType.Pair;
-            
+
+            if (cards.Count > 0) return HandType.HighCard;
             return HandType.HighCard;
         }
 
@@ -133,8 +132,16 @@ namespace balatrogamemain
 
         private static bool IsTwoPair(List<Card> cards)
         {
-            var groups = cards.GroupBy(c => c.Value).Where(g => g.Count() >= 2).ToList();
-            return groups.Count >= 2;
+            var groups = cards.GroupBy(c => c.Value).ToList();
+            int pairCount = 0;
+            foreach (var group in groups)
+            {
+                if (group.Count() >= 2)
+                {
+                    pairCount++;
+                }
+            }
+            return pairCount >= 2;
         }
 
         private static bool IsPair(List<Card> cards)

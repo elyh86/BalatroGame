@@ -41,21 +41,33 @@ namespace balatrogamemain
             // Analyseer de pokerhand
             hand.AnalyzeHand(selectedCards);
 
-            Console.WriteLine("\nEr zitten nog " + deck.GetCards().Count + " kaarten in het deck");
-
-            // Trek nog 3 kaarten
-            Console.WriteLine("\nJe trekt nog 3 extra kaarten:");
-            for (int i = 0; i < 3; i++)
+            // Vervang geselecteerde kaarten met nieuwe kaarten
+            Console.WriteLine("\nNieuwe kaarten trekken...");
+            foreach (Card selectedCard in selectedCards)
             {
-                Card card = deck.TakeCard();
-                if (card != null)
+                // Verwijder de geselecteerde kaart uit de hand
+                hand.GetCards().Remove(selectedCard);
+                
+                // Trek een nieuwe kaart en voeg toe
+                Card newCard = deck.TakeCard();
+                if (newCard != null)
                 {
-                    Console.WriteLine(card.Value + " van " + card.Suit);
+                    hand.AddCard(newCard);
+                    Console.WriteLine("Nieuwe kaart: " + newCard.MakeAsString() + " " + newCard.Suit);
                 }
             }
 
-            Console.WriteLine("\nEr zitten nog " + deck.GetCards().Count + " kaarten in het deck");
+            // Toon de bijgewerkte hand
+            Console.WriteLine("\nBijgewerkte hand:");
+            hand.ShowHand();
 
+            Console.WriteLine("\nEr zitten nog " + deck.GetCards().Count + " kaarten in het deck");
+            Console.WriteLine("\nDruk op Enter om te stoppen...");
+            
+            // Leeg de input buffer
+            while (Console.KeyAvailable)
+                Console.ReadKey(true);
+                
             Console.ReadLine();
         }
     }
