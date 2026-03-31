@@ -50,19 +50,21 @@ namespace balatrogamemain
         // laat speler kaarten selecteren voor pokerhand
         public List<Card> SelectCards()
         {
-            Console.WriteLine("Welke kaarten wil je selecteren? (bijv: 1,3,5)");
+            Console.WriteLine("Welke kaarten wil je kiezen? (bijv: 1,3,5)");
             string input = Console.ReadLine();
             
             List<Card> selected = new List<Card>();
-            string[] numbers = input.Split(','); // splits input
-            
-            foreach (string num in numbers)
+            if (!string.IsNullOrEmpty(input))
             {
-                int index;
-                // check of input geldig is
-                if (int.TryParse(num.Trim(), out index) && index > 0 && index <= this.cards.Count)
+                string[] numbers = input.Split(',');
+                
+                foreach (string num in numbers)
                 {
-                    selected.Add(this.cards[index - 1]); // voeg kaart toe
+                    int index;
+                    if (int.TryParse(num.Trim(), out index) && index > 0 && index <= this.cards.Count)
+                    {
+                        selected.Add(this.cards[index - 1]);
+                    }
                 }
             }
             

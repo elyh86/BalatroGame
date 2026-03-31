@@ -8,50 +8,24 @@ namespace balatrogamemain
 {
     enum HandType
     {
-        HighCard,
-        Pair,
-        TwoPair,
-        ThreeOfAKind,
-        Straight,
-        Flush,
-        FullHouse,
-        FourOfAKind,
-        StraightFlush,
-        RoyalFlush
+        HighCard, Pair, TwoPair, ThreeOfAKind, Straight, Flush,
+        FullHouse, FourOfAKind, StraightFlush, RoyalFlush
     }
 
-    class PokerHand // Herkent pokerhanden
+    class PokerHand
     {
         public static HandType GetHandType(List<Card> cards)
         {
-            // Check voor Royal Flush
-            if (IsRoyalFlush(cards)) return HandType.RoyalFlush;
-            
-            // Check voor Straight Flush
-            if (IsStraightFlush(cards)) return HandType.StraightFlush;
-            
-            // Check voor Four of a Kind
-            if (IsFourOfAKind(cards)) return HandType.FourOfAKind;
-            
-            // Check voor Full House
-            if (IsFullHouse(cards)) return HandType.FullHouse;
-            
-            // Check voor Flush
-            if (IsFlush(cards)) return HandType.Flush;
-            
-            // Check voor Straight
-            if (IsStraight(cards)) return HandType.Straight;
-            
-            // Check voor Three of a Kind
-            if (IsThreeOfAKind(cards)) return HandType.ThreeOfAKind;
-            
-            // Check voor Two Pair
-            if (IsTwoPair(cards)) return HandType.TwoPair;
-            
-            // Check voor Pair
-            if (IsPair(cards)) return HandType.Pair;
+            if (cards.Count < 5) return HandType.HighCard;
 
-            if (cards.Count > 0) return HandType.HighCard;
+            if (IsFourOfAKind(cards)) return HandType.FourOfAKind;
+            if (IsFullHouse(cards)) return HandType.FullHouse;
+            if (IsFlush(cards)) return HandType.Flush;
+            if (IsStraight(cards)) return HandType.Straight;
+            if (IsThreeOfAKind(cards)) return HandType.ThreeOfAKind;
+            if (IsTwoPair(cards)) return HandType.TwoPair;
+            if (IsPair(cards)) return HandType.Pair;
+            
             return HandType.HighCard;
         }
 
@@ -59,8 +33,6 @@ namespace balatrogamemain
         {
             switch (handType)
             {
-                case HandType.RoyalFlush: return 1000;
-                case HandType.StraightFlush: return 800;
                 case HandType.FourOfAKind: return 600;
                 case HandType.FullHouse: return 500;
                 case HandType.Flush: return 400;
@@ -70,19 +42,6 @@ namespace balatrogamemain
                 case HandType.Pair: return 20;
                 default: return 5;
             }
-        }
-
-        private static bool IsRoyalFlush(List<Card> cards)
-        {
-            if (!IsFlush(cards)) return false;
-            
-            var values = cards.Select(c => (int)c.Value).OrderBy(x => x).ToList();
-            return values.SequenceEqual(new List<int> { 1, 10, 11, 12, 13 }); // A,10,J,Q,K
-        }
-
-        private static bool IsStraightFlush(List<Card> cards)
-        {
-            return IsFlush(cards) && IsStraight(cards);
         }
 
         private static bool IsFourOfAKind(List<Card> cards)
@@ -99,8 +58,8 @@ namespace balatrogamemain
 
         private static bool IsFlush(List<Card> cards)
         {
-            var suits = cards.GroupBy(c => c.Suit).ToList();
-            return suits.Any(g => g.Count() >= 5);
+            var groups = cards.GroupBy(c => c.Suit).ToList();
+            return groups.Any(g => g.Count() >= 5);
         }
 
         private static bool IsStraight(List<Card> cards)

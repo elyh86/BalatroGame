@@ -11,13 +11,9 @@ namespace balatrogamemain
     {
         static void Main(string[] args)
         {
-            // Maak nieuw deck met 52 kaarten
             Deck deck = new Deck();
-
-            // Maak een spelerhand
             PlayerHand hand = new PlayerHand();
 
-            // Trek 5 kaarten uit het deck en geef aan speler
             for (int i = 0; i < 5; i++)
             {
                 Card card = deck.TakeCard();
@@ -27,10 +23,16 @@ namespace balatrogamemain
                 }
             }
 
-            // Toon de hand van de speler met score
+            Console.Clear();
             hand.ShowHand();
 
-            // Laat speler kaarten selecteren
+        SelecteerKaarten:
+            Console.WriteLine("\nDruk op Enter om kaarten te kiezen...");
+            Console.ReadLine();
+            
+            Console.Clear();
+            hand.ShowHand();
+            
             List<Card> selectedCards = hand.SelectCards();
             Console.WriteLine("\nGeselecteerde kaarten:");
             foreach (Card card in selectedCards)
@@ -38,17 +40,13 @@ namespace balatrogamemain
                 Console.WriteLine(card.MakeAsString() + " " + card.Suit);
             }
 
-            // Analyseer de pokerhand
             hand.AnalyzeHand(selectedCards);
 
-            // Vervang geselecteerde kaarten met nieuwe kaarten
             Console.WriteLine("\nNieuwe kaarten trekken...");
             foreach (Card selectedCard in selectedCards)
             {
-                // Verwijder de geselecteerde kaart uit de hand
                 hand.GetCards().Remove(selectedCard);
                 
-                // Trek een nieuwe kaart en voeg toe
                 Card newCard = deck.TakeCard();
                 if (newCard != null)
                 {
@@ -57,17 +55,24 @@ namespace balatrogamemain
                 }
             }
 
-            // Toon de bijgewerkte hand
-            Console.WriteLine("\nBijgewerkte hand:");
+            Console.WriteLine("\nDruk op Enter voor nieuwe hand...");
+            Console.ReadLine();
+            Console.Clear();
+            
+            Console.WriteLine("Nieuwe hand:");
             hand.ShowHand();
 
-            Console.WriteLine("\nEr zitten nog " + deck.GetCards().Count + " kaarten in het deck");
-            Console.WriteLine("\nDruk op Enter om te stoppen...");
+            Console.WriteLine("\nNog een keer kaarten kiezen? (j/n)");
+            string antwoord = Console.ReadLine();
             
-            // Leeg de input buffer
-            while (Console.KeyAvailable)
-                Console.ReadKey(true);
-                
+            if (antwoord.ToLower() == "j")
+            {
+                Console.Clear();
+                Console.WriteLine("Nieuwe ronde...");
+                goto SelecteerKaarten;
+            }
+
+            Console.WriteLine("\nDruk op Enter om te stoppen...");
             Console.ReadLine();
         }
     }
