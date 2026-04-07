@@ -25,7 +25,6 @@ namespace balatrogamemain
             if (IsThreeOfAKind(cards)) return HandType.ThreeOfAKind;
             if (IsTwoPair(cards)) return HandType.TwoPair;
             if (IsPair(cards)) return HandType.Pair;
-            
             return HandType.HighCard;
         }
 
